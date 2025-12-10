@@ -44,6 +44,12 @@ include ../mixins/icons
           label.input--switch
             input(type="checkbox" checked="true" id="enable-sound")
             span.slider
+
+        div.input-group
+          label.input-label(for="volume-slider") Volume
+          div.volume-control
+            input.volume-slider(type="range" min="0" max="100" value="50" id="volume-slider")
+            span#volume-value.volume-value 50%
       div.settings__panel__group
         button#settings-save.solid-button.solid-button Save
         button#settings-close.solid-button.solid-button--danger Discard and close

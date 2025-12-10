@@ -39,7 +39,7 @@
     "husky": "^8.0.1",
     "lint-staged": "^15.2.0",
     "mini-css-extract-plugin": "^2.7.7",
-    "node-sass": "^9.0.0",
+    "sass": "^1.69.5",
     "postcss-loader": "^8.0.0",
     "prettier": "^3.2.4",
     "pug": "^3.0.2",
@@ -69,5 +69,6 @@
     "ie 11",
     "firefox 15",
     "opera 12"
-  ]
+  ],
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }

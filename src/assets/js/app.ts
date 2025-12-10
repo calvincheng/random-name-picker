@@ -16,6 +16,8 @@ import SoundEffects from '@js/SoundEffects';
   const nameListTextArea = document.getElementById('name-list') as HTMLTextAreaElement | null;
   const removeNameFromListCheckbox = document.getElementById('remove-from-list') as HTMLInputElement | null;
   const enableSoundCheckbox = document.getElementById('enable-sound') as HTMLInputElement | null;
+  const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement | null;
+  const volumeValue = document.getElementById('volume-value') as HTMLSpanElement | null;
 
   // Graceful exit if necessary elements are not found
   if (!(
@@ -31,6 +33,8 @@ import SoundEffects from '@js/SoundEffects';
     && nameListTextArea
     && removeNameFromListCheckbox
     && enableSoundCheckbox
+    && volumeSlider
+    && volumeValue
   )) {
     console.error('One or more Element ID is invalid. This is possibly a bug.');
     return;
@@ -108,6 +112,8 @@ import SoundEffects from '@js/SoundEffects';
     nameListTextArea.value = slot.names.length ? slot.names.join('\n') : '';
     removeNameFromListCheckbox.checked = slot.shouldRemoveWinnerFromNameList;
     enableSoundCheckbox.checked = !soundEffects.mute;
+    volumeSlider.value = String(Math.round(soundEffects.volume * 100));
+    volumeValue.textContent = `${volumeSlider.value}%`;
     settingsWrapper.style.display = 'block';
   };
 
@@ -149,6 +155,11 @@ import SoundEffects from '@js/SoundEffects';
   // Click handler for "Settings" button
   settingsButton.addEventListener('click', onSettingsOpen);
 
+  // Input handler for volume slider
+  volumeSlider.addEventListener('input', () => {
+    volumeValue.textContent = `${volumeSlider.value}%`;
+  });
+
   // Click handler for "Save" button for setting page
   settingsSaveButton.addEventListener('click', () => {
     slot.names = nameListTextArea.value
@@ -156,6 +167,7 @@ import SoundEffects from '@js/SoundEffects';
       : [];
     slot.shouldRemoveWinnerFromNameList = removeNameFromListCheckbox.checked;
     soundEffects.mute = !enableSoundCheckbox.checked;
+    soundEffects.volume = parseInt(volumeSlider.value, 10) / 100;
     onSettingsClose();
   });
 
