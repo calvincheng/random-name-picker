@@ -24,12 +24,16 @@ export default class SoundEffects {
   /** Indicator for whether this sound effect instance is muted */
   private isMuted: boolean;
 
-  constructor(isMuted = false) {
+  /** Volume level (0.0 to 1.0) */
+  private volumeLevel: number;
+
+  constructor(isMuted = false, volume = 0.5) {
     if (window.AudioContext || window.webkitAudioContext) {
       this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
 
     this.isMuted = isMuted;
+    this.volumeLevel = Math.max(0, Math.min(1, volume));
   }
 
   /** Setter for isMuted */
@@ -40,6 +44,16 @@ export default class SoundEffects {
   /** Getter for isMuted */
   get mute(): boolean {
     return this.isMuted;
+  }
+
+  /** Setter for volume (0.0 to 1.0) */
+  set volume(volume: number) {
+    this.volumeLevel = Math.max(0, Math.min(1, volume));
+  }
+
+  /** Getter for volume */
+  get volume(): number {
+    return this.volumeLevel;
   }
 
   /**
@@ -103,7 +117,7 @@ export default class SoundEffects {
     const totalDuration = musicNotes
       .reduce((currentNoteTime, { duration }) => currentNoteTime + duration, 0);
 
-    this.playSound(musicNotes, { type: 'triangle', volume: 1, easeOut: true });
+    this.playSound(musicNotes, { type: 'triangle', volume: 1 * this.volumeLevel, easeOut: true });
 
     return new Promise<boolean>((resolve) => {
       setTimeout(() => {
@@ -134,7 +148,7 @@ export default class SoundEffects {
     const duration = Math.floor(durationInSecond * 10);
     this.playSound(
       Array.from(Array(duration), (_, index) => musicNotes[index % 3]),
-      { type: 'triangle', easeOut: false, volume: 2 }
+      { type: 'triangle', easeOut: false, volume: 2 * this.volumeLevel }
     );
 
     return new Promise<boolean>((resolve) => {

@@ -132,3 +132,48 @@
     );
   }
 }
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.volume-slider {
+  flex: 1;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: $color-input-background;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  @include shadow('small');
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: $color-switch-handle;
+    cursor: pointer;
+    @include shadow('small');
+  }
+
+  &::-moz-range-thumb {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: $color-switch-handle;
+    cursor: pointer;
+    border: none;
+    @include shadow('small');
+  }
+}
+
+.volume-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  min-width: 4rem;
+  text-align: right;
+}
